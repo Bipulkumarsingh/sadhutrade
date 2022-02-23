@@ -1,16 +1,9 @@
 import abc
 import datetime
-from enum import Enum
 from src.constants import INTERVAL
 from src.logger import set_up_logging
 
 log = set_up_logging()
-
-
-class DATASOURCETYPE(Enum):
-    YFINANCE = 1
-    PANDASDATAREADER = 2
-    ALPHA = 3
 
 
 class DataSource(metaclass=abc.ABCMeta):

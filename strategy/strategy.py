@@ -1,5 +1,5 @@
 import abc
-from datasource.datasource import DATASOURCETYPE
+from src.constants import DATASOURCETYPE
 from fundamentals.fundamentals import FUNDAMENTALSTYPE
 
 
