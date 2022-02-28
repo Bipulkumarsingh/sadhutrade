@@ -5,7 +5,6 @@ import datetime
 import pandas as pd
 from src.logger import set_up_logging
 from src.request_handler import get_data
-from datasource.datasource import DataSource
 from src.constants import ROOT_DIR, INTERVAL
 from fundamentals.fundamentals import Fundamentals
 
@@ -13,7 +12,7 @@ from fundamentals.fundamentals import Fundamentals
 log = set_up_logging()
 
 
-class AlphaAPIDataSource(DataSource):
+class AlphaAPIDataSource:
     _AV_API_URL = "https://www.alphavantage.co/query"
     _FUNCTION = "function"
     _SYMBOL = "symbol"

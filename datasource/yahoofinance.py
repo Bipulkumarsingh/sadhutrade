@@ -1,36 +1,19 @@
 import datetime
 import pandas as pd
 import yfinance as yf
-from .datasource import DataSource
 from src.constants import INTERVAL, PERIOD
 
 
-class YFinanceDataSource(DataSource):
+class YFinanceDataSource:
 
     def __init__(self):
         super().__init__()
         self.prices = pd.DataFrame()
 
-    def extract_historical_data(self,
-                                tickers=None,
-                                start_date=None,
-                                end_date=(datetime.date.today()),
-                                period=None,
-                                interval=INTERVAL.DAY,
-                                time_delta=None
-                                ):
+    def extract_historical_data(self, tickers=None, start_date=None, end_date=(datetime.date.today()),
+                                period=None, interval=INTERVAL.DAY, time_delta=None):
 
-        super().extract_historical_data(
-            tickers=tickers,
-            start_date=start_date,
-            end_date=end_date,
-            time_delta=time_delta,
-            period=period,
-            interval=interval
-        )
-
-        valid_parameters = \
-            YFinanceDataSource.validate_parameters(
+        valid_parameters = YFinanceDataSource.validate_parameters(
                 start_date=start_date,
                 end_date=end_date,
                 time_delta=time_delta,
