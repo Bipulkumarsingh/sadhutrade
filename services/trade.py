@@ -1,23 +1,41 @@
+import falcon
 from src.constants import *
-from datasource import smartapi
+from datasource.angelone import AngelOne
 from strategy.pattern_scanner import candle_pattern
 from stocks_model.StocksFactory import StocksFactory
 from src.constants import DATASOURCETYPE
 
 
-def angelOne():
-    tickers = get_config(key='tickers')
-    for count, ticker in enumerate(tickers):
-        try:
-            # if count == 5:
-            #     break
-            ohlc = smartapi.historical_data(ticker=ticker[1], interval='FIVE_MINUTE', period=5)
-            ohlc_day = smartapi.historical_data(ticker=ticker[1], interval='ONE_DAY', period=30)
-            # ohlc_day = ohlc_day.iloc[:-1, :]
-            cp = candle_pattern(ohlc, ohlc_day)
-            print(ticker[0], ": ", cp)
-        except Exception as ex:
-            print("skipping for ", ticker[0], f"\n{ex}")
+class Home:
+    @staticmethod
+    async def on_get(req, resp):
+        resp.status = falcon.HTTP_200  # This is the default status
+        resp.content_type = falcon.MEDIA_TEXT  # Default is JSON, so override
+        resp.text = 'working fine!'
+
+    # def on_post(self, req, resp):
+    #     temp = req.stream.read()
+    #     context = req.context
+    #     temp = json.loads(temp)
+
+
+class SignificantStock:
+    @staticmethod
+    async def on_get(req, resp):
+        tickers = get_config(key='tickers')
+        smart_api = AngelOne(tickers)
+        for count, ticker in enumerate(tickers):
+            try:
+                ohlc = smart_api.historical_data(ticker=ticker[1], interval='FIVE_MINUTE', period=5)
+                ohlc_day = smart_api.historical_data(ticker=ticker[1], interval='ONE_DAY', period=30)
+                # ohlc_day = ohlc_day.iloc[:-1, :]
+                cp = candle_pattern(ohlc, ohlc_day)
+                resp.status = falcon.HTTP_200
+                resp.content_type = falcon.MEDIA_TEXT
+                resp.text = cp
+                print(ticker[0], ": ", cp)
+            except Exception as ex:
+                print("skipping for ", ticker[0], f"\n{ex}")
 
 
 def yahooFinance():
@@ -57,8 +75,8 @@ def yahooFinance():
 
 
 if __name__ == '__main__':
-    angelOne()
     # yahooFinance()
+    pass
 
 # # Continuous execution
 # start_time = time.time()

@@ -1,21 +1,11 @@
-from flask import Flask
-from flask_cors import CORS
-from flask_restful import Api, Resource
+import falcon.asgi
+from services.trade import Home
+
+app = falcon.asgi.App()
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'S!a@d#h$u_$t%e!c&h#'
-api = Api(app)
-CORS(app)
+app.add_route('/home', Home())
 
-
-class Home(Resource):
-    @staticmethod
-    def get():
-        return {'hello': 'world'}
-
-
-api.add_resource(Home, '/')
 # import json
 # from src.constants import ROOT_DIR
 #
