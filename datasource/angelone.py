@@ -96,7 +96,7 @@ class AngelOne:
             print("Order placement failed: {}".format(e))
 
     def create_gtt(self):
-        # gtt rule creation
+        # gtt rule creation - stop loss
         try:
             gttCreateParams = {
                 "tradingsymbol": "SBIN-EQ",
@@ -116,7 +116,7 @@ class AngelOne:
             print("GTT Rule creation failed: {}".format(e))
 
     def get_gtt_list(self):
-        # gtt rule list
+        # gtt rule list - good till triggered
         try:
             status = ["FORALL"]  # should be a list
             page = 1

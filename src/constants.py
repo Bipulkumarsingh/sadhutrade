@@ -1,9 +1,11 @@
 import json
 from enum import Enum
 from requests import get as req_get
-from os.path import dirname, abspath
+# from os.path import dirname, abspath
+from os import getcwd
 
-ROOT_DIR = dirname(dirname(abspath(__file__)))
+# ROOT_DIR = dirname(dirname(abspath(__file__)))
+ROOT_DIR = getcwd()
 
 PRICES_KEY = 'prices'
 TICKERS_KEY = 'tickers'
